@@ -21,7 +21,7 @@ jobs:
          continue-on-error: true
          run: |
             npm install -g markdownlint-cli
-            markdownlint $(find . -name '*.md' | grep -vF './.git') > lint-result.txt
+            markdownlint $(find . -name '*.md' | grep -vF './.git') --output lint-result.txt
 
   comment:
     runs-on: ubuntu-latest
