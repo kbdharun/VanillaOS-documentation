@@ -19,8 +19,13 @@ jobs:
            node-version: '20'
        - run: |
             npm install -g markdownlint-cli
-            markdownlint $(find . -name '*.md' | grep -vF './.git') > lint-result.txt
-            if [ $? -ne 0 ]; then exit 1; fi
+            markdownlint $(find . -name '*.md' | grep -vF './.git') > output/markdownlint-result.txt
+            cat output/markdownlint-result.txt
+            echo ${{ github.event.number }} > output/pr-number
+       - uses: actions/upload-artifact@v3
+         with:
+          name: markdownlint-result
+          path: output/
 
   codespell:
     runs-on: ubuntu-latest
