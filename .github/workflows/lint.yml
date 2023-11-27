@@ -19,9 +19,10 @@ jobs:
            node-version: '20'
        - run: |
             npm install -g markdownlint-cli
+            mkdir -p output
             markdownlint $(find . -name '*.md' | grep -vF './.git') > output/markdownlint-result.txt
             cat output/markdownlint-result.txt
-            echo ${{ github.event.number }} > output/pr-number
+            echo ${{ github.event.number }} > pr-number
        - uses: actions/upload-artifact@v3
          with:
           name: markdownlint-result
