@@ -17,9 +17,11 @@ jobs:
        - uses: actions/setup-node@v4
          with:
            node-version: '20'
-       - run: |
-          npm install -g markdownlint-cli
-          markdownlint $(find . -name '*.md' | grep -vF './.git') > lint-result.txt
+       - name: Run MarkdownLint
+         continue-on-error: true
+         run: |
+            npm install -g markdownlint-cli
+            markdownlint $(find . -name '*.md' | grep -vF './.git') > lint-result.txt
 
   comment:
     runs-on: ubuntu-latest
@@ -45,6 +47,7 @@ jobs:
               repo: repo,
               body: `Markdown lint errors:\n${lintResult}`
             });
+      
 
   codespell:
     runs-on: ubuntu-latest
