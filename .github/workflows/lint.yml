@@ -28,19 +28,19 @@ jobs:
               with:
                 github-token: ${{secrets.GITHUB_TOKEN}}
                 script: |
-                    const fs = require('fs');
-                    const lintResult = fs.readFileSync('lint-result.txt', 'utf8');
-                    console.log(`Lint result: ${lintResult}`);
-                    const pr_number = github.context.issue.number;
-                    console.log(`PR number: ${pr_number}`);
-                    const owner = github.context.repo.owner;
-                    const repo = github.context.repo.repo;
-                    github.rest.pulls.createComment({
-                      issue_number: pr_number,
-                      owner: owner,
-                      repo: repo,
-                      body: `Markdown lint errors:\n${lintResult}`
-                    }); 
+                  const fs = require('fs');
+                  const lintResult = fs.readFileSync('lint-result.txt', 'utf8');
+                  console.log(`Lint result: ${lintResult}`);
+                  const pr_number = github.context.payload.pull_request.number;
+                  console.log(`PR number: ${pr_number}`);
+                  const owner = github.context.repo.owner;
+                  const repo = github.context.repo.repo;
+                  github.rest.pulls.createComment({
+                    issue_number: pr_number,
+                    owner: owner,
+                    repo: repo,
+                    body: `Markdown lint errors:\n${lintResult}`
+                  });
  
     codespell:
         runs-on: ubuntu-latest
